@@ -16,14 +16,13 @@ const register = async (data, callback) => {
 };
 
 const login = async ({userName, password}, callback) =>{
-    const user = await userModel.findOne({userName}).catch(error =>{
-        return callback({message: "Username is wrong!"});
-    });
-   if( await bcrypt.compare(password, user.password)){
+    const user = await userModel.findOne({userName})
+    if(!user) return callback({message: "Username is wrong!"});      
+   if(bcrypt.compareSync(password, user.password)){
      const token = auth.generateToken(user._id, user.userName);
      return callback(false,{...user.toJSON(), token});
    }else{
-    return callback({message: "Password is wrong!", "asdas" : error.message});
+    return callback({message: "Password is wrong!"});
    }
 
 }
