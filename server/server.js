@@ -6,6 +6,7 @@ const dbConfig = require("./config/dbConfig");
 const userRoute = require("./routes/userRoute");
 const app = express();
 const auth = require("./middlewares/auth");
+app.use(cors());
 app.use(express.json());
 
 // MIDDLEWARES
